@@ -1,0 +1,52 @@
+Required libraries:
+
+1. pickle
+2. TwitterAPI 
+3. twitter
+4. Numpy
+5. Matplotlib
+6. Collections
+7. re
+8. sklearn
+9. Networkx
+10. random
+11. copy
+12. Pandas
+
+
+Steps to Run the Assignment:
+
+
+Step 1 : collect.py   Output: tweets.pkl
+
+Step 2: cluster.py    Output: Figure_1_Raw_Graph.jpg; Figure_2_Sampled_Graph.jpg; Figure_3_Community_Detected_Graph.jpg; clusters.pkl
+
+Step 3: classify.py  Prerequisite: Annotated_Tweets.csv
+					 Output: classification.pkl
+
+Step 4: summarize.py  Prerequisites: tweets.pkl; clusters.pkl; classifcation.pkl;
+                      Output: summary.txt		  
+
+
+
+Description:
+
+1. collect.py: Using the Twitter API to fetch the tweets containing the keyword 'Muller Report'.  The data collected are dumped into tweets.pkl file which are used in the next stage of the assignment.
+
+2. cluster.py: The tweets collected in the previous step are loaded. Graph is generated using the users mentioned in the tweet. i.e. The user who tweeted is connected to all the mentioned users in the tweet body.  The Biggest cluster is sampled and Using Girvan-Newman algorithm the biggest cluster is partitioned into clusters. These clusters are dumped into the clusters.pkl file.
+
+On observing the clustererd graph, we notice that there is one big community and many smaller communities. I deduce that this is because most people are mentioning the key candidates in the muller report, users like Trump, Michael Cohen, FoxNews and so on. 
+
+3. classify.py: For running classification, we need to get tweets and manually annotate them. The annotation specifies the sentiment. 1 being positive, 0 being neutral and -1 being negative.
+These tweets are fetched by running get_train_tweets.py . A file named tweets_for_annotation.csv is generated. We need to annotate these tweets manually and save the file as Annotated_tweets.csv.
+
+Using Annotated_tweets.csv, 3 fold cross validation and train_test_split are used with the help of logistic regression classifier. The accuracies are stored in classification.pkl file.
+
+4. summerize.py: All the data is read from the previous steps. The data are summerized in summary.txt file.
+
+
+
+Conclusion:
+
+On the release of the Muller Report which was the report of the investigation conducted in the White House surrounding the Trump Collusion with the Russian Government, there were a lot of negative and neutral tweets. There were very less amount of positive tweets.     
+

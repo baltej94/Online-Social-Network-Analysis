@@ -1,0 +1,26 @@
+Number of users collected: 2974 
+
+Number of messages collected: 8006 
+
+Number of communities discovered: 26 
+
+Average number of users per community: 114.38
+
+Mean Accuracy for 3 fold cross validation: 0.8056
+
+Train_test_split Accuracy: 0.7955
+
+Number of Positve Instances: 22 
+
+Number of Negative Instances: 108
+
+Number of Neutral Instances: 86
+
+Example of Positive Instance: 
+ @realDonaldTrump At least we have a few excellent journalists left in the US - especially at NYTimes. Can’t wait until we the people see the Full Muller Report!
+
+Example of Negative Instance: 
+ @Greg_Sbutta @krassenstein The attorney general is acting as Trump's personal attorney and was appointed by Trump for Trump. Since we are talking about conflict of interests. Besides did you read the Muller report. My guess is you didn't because it's damning.
+
+Example of Neutral Instance: 
+ @neal_katyal What took him so long?  It's not like the Muller report was some kind of revelation.  We knew about russians porn stars endless lies.  Real courage would have been to stand up 2 years ago...better late than never?

@@ -1,0 +1,210 @@
+﻿1. Looking at the top errors printed by get_top_misclassified, name two ways you would modify your classifier to improve accuracy (it could be features, tokenization, or something else.)
+
+Answer:
+
+One can better preprocess the given data. Some of the most popular techniques to do so are by removing numbers, stemming, tagging part of speech, removing punctuation, lowercase and remove stop words.
+
+Currently we removed punctuation and converted the data to lower case.
+
+To Better classify the sentiments:
+
+* Machine Learning based:
+   One can use better machine learning techniques like deep learning neural networks. 
+   In regards to the scope of the assignment we are confined to use only Logistic regression. 
+   One can better tune the parameters in logistic regression.
+
+* Lexicon based: 
+   One can use different variety of words annotated by a popularity score, to decide the general assement score of the given content.
+   In the assignment, the sentinment words list is quite small, one can increase the number of words. The advantage of this approach is that it does not require any training data, but the disadvantage is that we have a large dataset of words. Also, there are no expressions in the sentiment lexicons.
+
+   There is also big hurdle in sentiment lexicons. A positive or a negative sentiment word may have opposite orientations in different application domains. Detecting sarcasm is really tedious and hard.
+
+
+2. Implement one of the above methods. How did it affect the results?
+
+
+Answer:
+
+Approach 1: Remove stop words while tokenizing.
+Approach 2: Adding additional positive and negative words in lexicon_features method
+Approach 3: Combine both approach 1 and 2.
+
+
+To implement Approach 1: Call "tokenize_and_remove_stopwords" method instead of "tokenize" method in a2.py 
+
+To implement Approach 2: Comment the small set of positive and negative words on lines (198 and 199) and uncomment lines (200 and 2001) which contain a larger set of words as compared to the previous set.
+
+
+Note:
+* The positive and the negative words are taken from : http://ptrckprry.com/course/ssd/data/positive-words.txt and http://ptrckprry.com/course/ssd/data/negative-words.txt
+* The stop words are taken from : https://github.com/Yoast/YoastSEO.js/blob/develop/src/config/stopwords.js
+
+
+Remarks:
+			Best:cross-validation accuracy 		Worst:cross-validation accuracy 		Testing accuracy
+Default			0.7700000000000001			0.6475						0.730000	
+Approach 1		0.7825					0.5900000000000001				0.772500
+Approach 2		0.795					0.6525000000000001				0.765000
+Approach 3		0.7699999999999999			0.5900000000000001				0.762500	
+
+
+####################################### OUTPUT: Approach 1 ################################################
+best cross-validation result:
+{'punct': False, 'features': [<function token_features at 0x7fd87ff28c80>, <function token_pair_features at 0x7fd87ff28d08>, <function lexicon_features at 0x7fd87ff28d90>], 'min_freq': 2, 'accuracy': 0.7825}
+worst cross-validation result:
+{'punct': False, 'features': [<function token_pair_features at 0x7fd87ff28d08>], 'min_freq': 10, 'accuracy': 0.5900000000000001}
+
+Mean Accuracies per Setting:
+features=token_features token_pair_features lexicon_features: 0.76458
+features=token_features token_pair_features: 0.74333
+min_freq=2: 0.72393
+features=token_features lexicon_features: 0.71875
+features=token_features: 0.70708
+punct=False: 0.70643
+punct=True: 0.69714
+min_freq=5: 0.69429
+features=token_pair_features lexicon_features: 0.68917
+min_freq=10: 0.68714
+features=lexicon_features: 0.65125
+features=token_pair_features: 0.63833
+
+TOP COEFFICIENTS PER CLASS:
+negative words:
+neg_words: 0.86924
+token=nothing: 0.45269
+token=worst: 0.38471
+token_pair=looks__like: 0.35698
+token=waste: 0.35153
+
+positive words:
+pos_words: 0.52264
+token_pair=one__best: 0.32632
+token=excellent: 0.31492
+token=worth: 0.30973
+token=great: 0.30894
+testing accuracy=0.772500
+
+TOP MISCLASSIFIED TEST DOCUMENTS:
+
+truth=1 predicted=0 proba=0.996851 
+Ah, classic comedy. At the point in the movie where brains get messed together, a two minute scene with Bruce Campbell beating himself up partially, reminds me of how simplistic movies and ideas can grab you and wrap you into a whole movie.<br /><br />For years and years, Bruce Campbell knows what kind of movies we want out of him. We want to see weird movies like Bubba Ho Tep. We want to see cameo roles in Sam Raimi movies, and we want to see 'Man with the Screaming Brain'. With the title alone, one knows that it's going to border that completely silly type of movie, like Army of Darkness, only with more silly and less monsters.<br /><br />The idea of the movie is simple. Bruce sees doctor. Doctor has new idea. Bruce gets bad things happen to him on way to see doctor. Coincidentally, it's the thing the doctor wanted to show him that saves him. Hilarity ensues.<br /><br />With the addition of Ted Raimi as a weird Russian guy, and journeyman Stacy Keach as Dr. Ivan Ivanovich Ivanov, it's funny, that does this movie. Complete funny. Never a point of scary.<br /><br />If you like the silly Bruce Campbell, you'll like this. Then again, why would you be watching this if you didn't like Bruce Campbell?
+
+truth=1 predicted=0 proba=0.991041 
+In defense of this movie I must repeat what I had stated previously. The movie is called Arachina, it has a no name cast and I do not mean no name as in actors who play in little seen art house films. I mean no name as in your local high school decided to make a film no name and it might have a 2 dollar budget. So what does one expect? Hitchcock?<br /><br />I felt the movie never took itself seriously which automatically takes it out of the worst movie list. That list is only for big budget all star cast movies that takes itself way too seriously. THe movie The Oscar comes to mind, most of Sylvester Stallone's movies. THe two leads were not Hepburn and Tracy but they did their jobs well enough for this movie. The woman kicked butt and the guy was not a blithering idiot. The actor who played the old man was actually very good. The man who played anal retentive professor was no Clifton Webb but he did a god job. And the Bimbo's for lack of a better were played by two competent actors. I laughed at the 50 cent special effects. But that was part of the charm of the movie. It played like a hybrid Tremors meets Night of the Living Dead. The premise of the movie is just like all Giant Bug movies of the 50's. A Meteor or radiation stir up the ecosystem and before you know it we have Giant Ants, Lobsters, rocks or Lizards terrorizing the locals. A meteor was the cause of the problems this time. I was was very entertained. I didn't expect much and I go a lot more then I bargained for.
+
+truth=0 predicted=1 proba=0.987653 
+Simply put, I was amazingly disappointed. I'm a huge fan of Asian Horror, and I can watch unoriginality (I myself enjoyed "The Red Shoes" and "Phone"), but this was just poor.<br /><br />The movie has a lot of elements that are very high-quality: the photography is eye-catching, the visuals are cool, the directing is inspired, the acting is pretty good, the music is easy on the ears, and the CGI is incredible. But, since this is a horror film, we are expected to be scared, which just won't happen with this film. As with most South Korean horrors, this is unoriginal almost from beginning to end: there's the trademark long-haired vengeful female ghost, ominous clumps of thick, black hair and puddles of water, and near the end, a twist that *almost*, but not quite makes sense out of the whole thing (the twist is easily one of the best qualities). And to the viewer's irritation, when the film isn't recycling (at times, so exact that it could easily be dubbed plagiarized) imagery from other movies, it's making you jump. A lot. And by jumps, I don't mean things jumping out or anything, just VERY loud noises and screeches in the soundtrack used to make the audience jump six feet in the air (there's even a few "made-you-jump" moments that are simply infuriating). And when it is not ripping-off other movies, it's boring, and hard to sit through.<br /><br />And it's a shame, because "Ryeong" could have easily been really good, and it has everything to make it good, but its the annoying overuse of completely predictable loud noises and jump scares that eventually ruin the movie. A perfect example of how good it could have been: there's a moment when one of out characters is looking at a corpse, and without a sound, the corpse looks back. It's wholly predictable, but the use of silence in that scene is brilliant. And unfortunately, that's as scary as the movie got for me.<br /><br />Admittedly, "Ryeong" has a few good features, and even a couple jumps that aren't as predictable, and do work. There's a very good and sad back-story used to explain the events, and the twist is pretty unpredictable. Those are the only things that separate the film from any other Asian ghost/horror film. But the problem with these is, even though they do work, they have been used before (J-Horror fans will easily realize the big reveal was inspired by "A Tale of Two Sisters"), and it takes the back-story a good fifty minutes to get going.<br /><br />So in the end, "Ryong" really seems like a truly wasted opportunity. Tae-kyeong Kim hoped that the plot twist and other good features act as diversions, so the audience won't notice the huge flaws. But he failed, and well... We noticed everything.<br /><br />My rating: 4/10.
+
+truth=1 predicted=0 proba=0.984350 
+I was looking forward to The Guardian, but when I walked into the theater I wasn't really in the mood for it at that particular time. It's kind of like the Olive Garden - I like it, but I have to be in the right mindset to thoroughly enjoy it.<br /><br />I'm not exactly sure what was dampening my spirit. The trailers looked good, but the water theme was giving me bad flashbacks to the last Kevin Costner movie that dealt with the subject - Waterworld. Plus, despite the promise Ashton Kutcher showed in The Butterfly Effect, I'm still not completely sold on him. Something about the guy just annoys me. Probably has to do with his simian features.<br /><br />It took approximately two minutes for my fears to subside and for my hesitancies to slip away. The movie immediately throws us into the midst of a tense rescue mission, and I was gripped tighter than Kenny Rogers' orange face lift. My concerns briefly bristled at Kutcher's initial appearance due to the fact that too much effort was made to paint him as ridiculously cool and rebellious. Sunglasses, a tough guy toothpick in his mouth, and sportin' a smirk that'd make George Clooney proud? Yeah, we get it. I was totally ready to hate him.<br /><br />But then he had to go and deliver a fairly strong performance and force me to soften my jabs. <br /><br />Darn you, ape man! Efficiently mixing tense, exciting rescue scenes, drama, humor, and solid acting, The Guardian is easily a film that I dare say the majority of audiences will enjoy. You can quibble about its clichés, predictability, and rare moments of overcooked sappiness, but none of that takes away from the entertainment value.<br /><br />I had a bad feeling that the pace would slow too much when Costner started training the young guys, but on the contrary, the training sessions just might be the most interesting aspect of the film. Coast Guard Rescue Swimmers are heroes whose stories have never really been portrayed on the big screen, so I feel the inside look at what they go through and how tough it is to make it is very informative and a great way to introduce audiences to this under-appreciated group.<br /><br />Do you have what it takes to be a rescue swimmer? Just think about it -you get to go on dangerous missions in cold, dark, rough water, and then you must fight disorientation, exhaustion, hypothermia, and a lack of oxygen all while trying to help stranded, panicked people who are depending on you for their survival. And if all that isn't bad enough, sometimes you can't save everybody so you have to make the tough decision of who lives and who dies.<br /><br />Man, who wants all that responsibility? Not me! I had no idea what it was really like for these guys, and who would have thought I'd have an Ashton Kutcher/Kevin Costner movie to thank for the education? <br /><br />Not only does The Guardian do a great job of paying tribute to this rare breed of hero, but lucky for us it also does a good job of entertaining its paying customers.<br /><br />THE GIST <br /><br />Moviegoers wanting an inside look at what it's like to embark on a daring rescue mission in the middle of the ocean might want to give The Guardian a chance. I saw it for free, but had I paid I would've felt I had gotten my money's worth.
+
+truth=1 predicted=0 proba=0.983847 
+While i read all of the complaints about this movie before i saw it, i still had interest from the preview. I don't know if it was because i was expecting a bomb or what, but i really enjoyed the movie. The I was not very frightened at all until the second half of the movie, but even then it wasn't very bad at all. I think that most of the scenes and false alarms were realistic, if a little too coincidental, but it was necessary to move the story along. I think that the house and surrounding area is the perfect setting for this type of movie, it is beautiful and huge, but then the same qualities that are attractive become scary. I also think that the light arrangement worked extremely well because not only did they turn on upon entry, but there was no way to keep them on, so the house stayed dark outside of the small section Jill was in.<br /><br />Speaking of Jill, i thought her part was acted pretty well, at first it wasn't as believable, but after a few phone calls it was fine. In fact the scenes where she is frightened are acted perfectly. And, finally, someone got the fire poker right. I can't tell you how many times when i hear a noise at my house i grab the fire poker, and it was a nice touch for her to do the same, even though she idiotically forgets it when she needs it most.<br /><br />In regards to the plot holes, the movie is not perfect but almost every hole can be explained, and part of the mystery is how he got in..exactly, how long was he watching her? how did he get out to kill her friend? and when exactly did the gardener die? overall, i enjoyed it and i was surprised how quickly it went. It kept my attention, and i wanted to see how it ended, although the ending was very brief and left a bad taste in my mouth. My only complaint, other than the ending, was the lack of character development. They could have added ten minutes with her and her friends or something to make us feel bad for her situation more, to give us a taste of her personality and to give us foreshadowing to how she will handle the situation(for example, the scene where she debates whether to go back for the kids, it looks like some scene is missing at the beginning that talked about her only caring about herself or something).
+
+####################################### OUTPUT: Approach 2 ################################################
+best cross-validation result:
+{'punct': False, 'features': [<function token_pair_features at 0x7f412b446950>, <function lexicon_features at 0x7f412b4469d8>], 'min_freq': 5, 'accuracy': 0.795}
+worst cross-validation result:
+{'punct': True, 'features': [<function token_features at 0x7f412b4468c8>], 'min_freq': 10, 'accuracy': 0.6525000000000001}
+
+Mean Accuracies per Setting:
+features=token_pair_features lexicon_features: 0.78125
+features=token_features token_pair_features lexicon_features: 0.76375
+features=token_features token_pair_features: 0.73542
+min_freq=2: 0.73446
+punct=False: 0.73369
+min_freq=5: 0.73143
+features=token_pair_features: 0.72875
+punct=True: 0.72190
+min_freq=10: 0.71750
+features=token_features lexicon_features: 0.70792
+features=token_features: 0.69000
+features=lexicon_features: 0.68750
+
+TOP COEFFICIENTS PER CLASS:
+negative words:
+token_pair=is__so: 0.45107
+neg_words: 0.41925
+token_pair=the__worst: 0.39452
+token_pair=of__this: 0.38966
+token_pair=about__the: 0.33059
+
+positive words:
+pos_words: 0.38990
+token_pair=it__is: 0.32664
+token_pair=the__most: 0.31129
+token_pair=the__and: 0.30905
+token_pair=and__it: 0.30695
+testing accuracy=0.765000
+
+TOP MISCLASSIFIED TEST DOCUMENTS:
+
+truth=1 predicted=0 proba=0.998066 
+Ah, classic comedy. At the point in the movie where brains get messed together, a two minute scene with Bruce Campbell beating himself up partially, reminds me of how simplistic movies and ideas can grab you and wrap you into a whole movie.<br /><br />For years and years, Bruce Campbell knows what kind of movies we want out of him. We want to see weird movies like Bubba Ho Tep. We want to see cameo roles in Sam Raimi movies, and we want to see 'Man with the Screaming Brain'. With the title alone, one knows that it's going to border that completely silly type of movie, like Army of Darkness, only with more silly and less monsters.<br /><br />The idea of the movie is simple. Bruce sees doctor. Doctor has new idea. Bruce gets bad things happen to him on way to see doctor. Coincidentally, it's the thing the doctor wanted to show him that saves him. Hilarity ensues.<br /><br />With the addition of Ted Raimi as a weird Russian guy, and journeyman Stacy Keach as Dr. Ivan Ivanovich Ivanov, it's funny, that does this movie. Complete funny. Never a point of scary.<br /><br />If you like the silly Bruce Campbell, you'll like this. Then again, why would you be watching this if you didn't like Bruce Campbell?
+
+truth=1 predicted=0 proba=0.997913 
+In defense of this movie I must repeat what I had stated previously. The movie is called Arachina, it has a no name cast and I do not mean no name as in actors who play in little seen art house films. I mean no name as in your local high school decided to make a film no name and it might have a 2 dollar budget. So what does one expect? Hitchcock?<br /><br />I felt the movie never took itself seriously which automatically takes it out of the worst movie list. That list is only for big budget all star cast movies that takes itself way too seriously. THe movie The Oscar comes to mind, most of Sylvester Stallone's movies. THe two leads were not Hepburn and Tracy but they did their jobs well enough for this movie. The woman kicked butt and the guy was not a blithering idiot. The actor who played the old man was actually very good. The man who played anal retentive professor was no Clifton Webb but he did a god job. And the Bimbo's for lack of a better were played by two competent actors. I laughed at the 50 cent special effects. But that was part of the charm of the movie. It played like a hybrid Tremors meets Night of the Living Dead. The premise of the movie is just like all Giant Bug movies of the 50's. A Meteor or radiation stir up the ecosystem and before you know it we have Giant Ants, Lobsters, rocks or Lizards terrorizing the locals. A meteor was the cause of the problems this time. I was was very entertained. I didn't expect much and I go a lot more then I bargained for.
+
+truth=0 predicted=1 proba=0.997657 
+In 1932, Humphrey Bogart was a relative unknown--an unproven actor who was starring in one of his first films. And, because he was an unknown, the movie they gave him was clearly a B-movie--a quick film with relatively low expectations. After seeing it, I could see why it would still take Bogart many more years AND another film studio before he became a household name. While the film isn't terrible, it certainly isn't good--making it more of a curiosity than anything else when seen today.<br /><br />Bogart is a pilot who has dreams of building his own aircraft engine company. However, when a vacuous rich playgirl comes his way, his dreams all seem to go on hold. As one of the characters in the film said, the combination of the two is like oil and water--they just don't mix.<br /><br />While Bogart is throwing away his promising career, his sister is going full speed on the Road to Skankville--having met a sleazy guy who convinces her to sleep with rich guys so they can shake them down for tons of cash! Bogey has no idea his sister ISN'T the actress she claims to be and doesn't realize later that the rich woman he loves leaves him for the same guy whose mistress is....Bogart's SISTER!!! All this leads up to a finale that is reasonably enjoyable. However, what follows is one of the dumbest scenes I have watched in a very long time! By now, the rich lady is not going to marry the guy sleeping with Bogey's sister (whew!) but because she's now poor and no good for Bogart, she's about to fly away and kill herself. Bogey finds out, chases the plane on foot, jumps on the plane as it's taking off and crawls up the fuselage to take control of the plane and save her!!! This is so utterly silly and ridiculous, I found myself laughing out loud. Up until then, I might have scored it a 4 or 5--this sunk the movie to a 3 (how one reviewer gave this an 8 is beyond me).<br /><br />The bottom line is that this was a talking and silly film. On top of that, it's all wrong for Bogart, as the action hero at the end and the simpering lover are horrible matches for his persona that was so wonderfully created in the early 40s. Manly and solid better suits the man--one of America's great actors but clearly out of his element here.<br /><br />By the way, those who love Pre-Code films and their very adult sensibilities may want to see this one. Practically everyone in the film believes in and practices pre-marital sex and Bogey curses in the film--things you never would have seen after the toughened and more moralistic Production Code was adopted in 1934.
+
+truth=1 predicted=0 proba=0.997369 
+Being a freshman in college, this movie reminded me of my relationship with my mom. Of course, my situation doesn't parrallel with Natalie Portman and Surandon's situation; but my mom and I have grown up with the typical mother and daughter fights. There is always the mother telling you what to do, or not being the kind of mother you want to be. I was balling my eyes at the end of this movie. Surandon's reaction of her daughter going to the East coast, miles away, after all they've been through reminded me of how I felt, being from a small city in the West coast, going to New York. <br /><br />The movie is meant for women who have children that are now all grown up. It is very touching, I was moved by the movie. Every feeling out of the characters in this movie was utterly real, you didn't get any phony sentimentality. I was sitting through the credits at the screening of this movie, alone, wishing my mother was sitting next to me so I could hug her and thank her for everything. This movie is a bit corny of course, but everything is trully momentous. Its all about what a mom can learn from her child; and what a child learns from her mother. 8/10
+
+truth=1 predicted=0 proba=0.996253 
+There I was on vacation when my host suggested we take in this B-Movie festival in Breda. I was resistant, as I hadn't gone on the trip to sit in a movie theater, but I've got to admit that I don't regret a second of this one (especially with Stephen Malkmus' contribution). It probably helped that I had no idea what to expect.<br /><br />SEA OF DUST starts out like a typical costume drama. We've got a young medical student going to help a doctor whose town is being destroyed by a crazy plague (which somehow involves exploding heads). On the way, he stops to visit his fiancé and gets thrown off the property by her father. Traveling on, he finds a girl lying on the road, another plague victim, and takes her along to the doctor's. Yawn, I thought. It all seemed pretty predicable.<br /><br />And then everything went crazy and it suddenly turned into a completely different film. Tom Savini shows up looking like Dracula, characters begin traveling to "the other side" of reality, and the dialog gets increasingly humorous.<br /><br />And just when I thought it had settled into a groove, the picture changes again, becoming really dark and bizarre. I won't spoil it for first time viewers, but there's an amazing sequence about hollow people, lots of chat about the abuse of religion by society, and some over-the-top gore effects. And did I mention Stephen Malkmus? This isn't a perfect movie (in case you haven't figured that out from its appearance at a B-Movie festival), but it's well worth the time for adventurous viewers. Great visuals, cool soundtrack, lots of interesting ideas. The acting is a little zany at times, but I think that's the point.<br /><br />Funny I had to go to Breda to see find an American picture that looked like a British horror movie. You figure that one out...
+
+
+
+####################################### OUTPUT: Approach 3 ################################################
+best cross-validation result:
+{'punct': False, 'features': [<function token_features at 0x7fd87ff28bf8>, <function token_pair_features at 0x7fd87ff28c80>], 'min_freq': 2, 'accuracy': 0.7699999999999999}
+worst cross-validation result:
+{'punct': False, 'features': [<function token_pair_features at 0x7fd87ff28c80>], 'min_freq': 10, 'accuracy': 0.5900000000000001}
+
+Mean Accuracies per Setting:
+features=token_features token_pair_features lexicon_features: 0.75083
+features=token_features token_pair_features: 0.74333
+features=token_features lexicon_features: 0.74000
+min_freq=2: 0.73250
+punct=False: 0.71524
+features=token_pair_features lexicon_features: 0.71375
+punct=True: 0.70786
+features=token_features: 0.70708
+min_freq=5: 0.70607
+min_freq=10: 0.69607
+features=lexicon_features: 0.68750
+features=token_pair_features: 0.63833
+
+TOP COEFFICIENTS PER CLASS:
+negative words:
+token=bad: 0.54003
+token=worst: 0.53081
+token=nothing: 0.45926
+token=waste: 0.38210
+token=boring: 0.34639
+
+positive words:
+token=great: 0.53738
+token_pair=one__best: 0.38215
+token=excellent: 0.33541
+token=worth: 0.33061
+token=watch: 0.29726
+testing accuracy=0.762500
+
+TOP MISCLASSIFIED TEST DOCUMENTS:
+
+truth=0 predicted=1 proba=0.993908 
+Steven Seagal is back! Here with his third film released this year. Of course as a one time fan who has become increasingly disgruntled I can say it comes as no surprise that this is pretty lame. Firstly the film made headlines because of apparent problems in production due to Seagal. He would turn up late on set, change the script, crew etc and generally cause problems for the director, Don E Faun Leroy (his lack of talent his trouble enough!). This also happens in their second collaboration the upcoming Mercenary which promises to be just as bad as this garbage. This also marks a big turning point in Seagal's career because this film is the first of his to really dig out the stock footage. There was a little in Ticker but this film takes the biscuit. They borrow bits from, The Order (A Van Damme movie, Seagals biggest rival in DTV movies!) No Code Of Conduct, Undisputed, and also an entire action sequence from the little known Peter Weller starring vehicle Top Of The World. Interestingly the car chase stolen from Weller's epic, made almost 10 years ago and ironically probably cheaper than this garbage, is actually by far the best action scene of the film. I was shocked enough when Dolph Lundgren had a brief stint in the stock action video world, which thankfully he has escaped from. Seagal though is the leader of the DTV action market currently, with Van Damme and Snipes his main rivals. Seagal still manages to sell movies and for the life of me I don't know how. Surely the fans must be getting bored of this awfulness, longing for a return to the likes of Above The Law. The story here is totally lame. In fact the film has so many plot holes it doesn't bare thinking about. For example at the end of a film there's a little girl that Seagal apparently knows at an orphanage who he gives a necklace to. Why I don't know but we never see her at all in the rest of the movie, or hear her mentioned. Seagal has a girlfriend in this movie who at the beginning of the film is with a psychic and she becomes haunted by visions, which by the end of the film are never explained and mean nothing. The film is so ridiculously glued together by a series of meaningless pap that it becomes headache inducing.. This is by far Seagal's dumbest movie! Seagal himself is as wooden as ever, however to his credit he doesn't get dubbed in this one as far as I could tell. Seagal does however feel the need to talk like he is a gangsta rapper, making me long for the days he would don his Brooklyn/Italian-American accent, in his classic early films. He also has a painfully unfunny double act with Treach, who I assume is a rapper. It is funny how producers seem to think that the combo of Seagal, plus hip-hop star seems to work, because his team up with DMX in Exit Wounds was his most successful film since Under Siege. Clearly though if no one has heard of the rapper, it won't work. This is an action film though and so the action itself must be judged. Unfortunately the action that didn't come form the NU Image back catalogue is strictly routine. There are a few small fight scenes with some classic Seagal aikido but when 90% is performed by his stunt double, who really does have a rigorous work out in this film, it really doesn't impress much. There are also some standard gun fights which really only have some nice violent and bloody squibbage going for them. All in all this is a painfully boring experience and once again I'm left giving the same verdict: Seagal has lost it! I keep asking the years old question now, "why do people still watch his movies?" That is all very well and good as a question but the sad bastard that I am continues to watch his films in the deluded hope he may do something good once again. Chances are slim, unlike Seagal's ever expanding waistline. *1/2
+
+truth=1 predicted=0 proba=0.992381 
+Ah, classic comedy. At the point in the movie where brains get messed together, a two minute scene with Bruce Campbell beating himself up partially, reminds me of how simplistic movies and ideas can grab you and wrap you into a whole movie.<br /><br />For years and years, Bruce Campbell knows what kind of movies we want out of him. We want to see weird movies like Bubba Ho Tep. We want to see cameo roles in Sam Raimi movies, and we want to see 'Man with the Screaming Brain'. With the title alone, one knows that it's going to border that completely silly type of movie, like Army of Darkness, only with more silly and less monsters.<br /><br />The idea of the movie is simple. Bruce sees doctor. Doctor has new idea. Bruce gets bad things happen to him on way to see doctor. Coincidentally, it's the thing the doctor wanted to show him that saves him. Hilarity ensues.<br /><br />With the addition of Ted Raimi as a weird Russian guy, and journeyman Stacy Keach as Dr. Ivan Ivanovich Ivanov, it's funny, that does this movie. Complete funny. Never a point of scary.<br /><br />If you like the silly Bruce Campbell, you'll like this. Then again, why would you be watching this if you didn't like Bruce Campbell?
+
+truth=1 predicted=0 proba=0.986786 
+In defense of this movie I must repeat what I had stated previously. The movie is called Arachina, it has a no name cast and I do not mean no name as in actors who play in little seen art house films. I mean no name as in your local high school decided to make a film no name and it might have a 2 dollar budget. So what does one expect? Hitchcock?<br /><br />I felt the movie never took itself seriously which automatically takes it out of the worst movie list. That list is only for big budget all star cast movies that takes itself way too seriously. THe movie The Oscar comes to mind, most of Sylvester Stallone's movies. THe two leads were not Hepburn and Tracy but they did their jobs well enough for this movie. The woman kicked butt and the guy was not a blithering idiot. The actor who played the old man was actually very good. The man who played anal retentive professor was no Clifton Webb but he did a god job. And the Bimbo's for lack of a better were played by two competent actors. I laughed at the 50 cent special effects. But that was part of the charm of the movie. It played like a hybrid Tremors meets Night of the Living Dead. The premise of the movie is just like all Giant Bug movies of the 50's. A Meteor or radiation stir up the ecosystem and before you know it we have Giant Ants, Lobsters, rocks or Lizards terrorizing the locals. A meteor was the cause of the problems this time. I was was very entertained. I didn't expect much and I go a lot more then I bargained for.
+
+truth=1 predicted=0 proba=0.963954 
+This movie blew me away - I have only seen two episodes of the show, never saw the first movie, but went to a pre-screening where Johnny Knoxville himself introduced the movie, telling us to 'turn off our sense of moral judgment for an hour and a half.' He was right. As a movie, this would probably rate a 2, given it has zero plot, no structure besides randomness, and very little production value. However, that isn't the point. Everyone in our theatre was laughing and gasping the whole way through - not only were some of the stunts creative (see trailer if you need to know but they hid some of the best (or worst depending on how you want to look at it)), but some of the stuff they did took us completely by surprise. These guys do some stuff that won't make it into your newspaper reviews (and probably can't even be published here), involving lots of things below the belt. However, almost 3/4 of the stunts are fantastically hysterical (even if morally condemnable, but remember Knoxville's statement), and if you are in the right mindset this movie is hysterical to watch. Only about 20 minutes of this movie could have actually been shown on TV, so consider yourself warned of what you're getting into - some stuff is disgusting, but instead of being repulsed by it you end up laughing at the sheer stupidity of it all. As a person who thought Jackass the TV show was an over-hyped fad with only a few funny sketches and lots of unnecessary pain, the amount of fun I had at this movie has made me realize that having no boundaries is the best environment for these guys to work in. It's a lot of fun and should be a great comedic fix until the Borat movie comes out. With this movie, you may think you know what you're getting, but these guys are a few steps ahead of you - I guarantee you'll be surprised by the 3rd sketch. So enjoy, and don't worry: you won't want to perform almost any of their stuff at home.
+
+truth=0 predicted=1 proba=0.961198 
+Simply put, I was amazingly disappointed. I'm a huge fan of Asian Horror, and I can watch unoriginality (I myself enjoyed "The Red Shoes" and "Phone"), but this was just poor.<br /><br />The movie has a lot of elements that are very high-quality: the photography is eye-catching, the visuals are cool, the directing is inspired, the acting is pretty good, the music is easy on the ears, and the CGI is incredible. But, since this is a horror film, we are expected to be scared, which just won't happen with this film. As with most South Korean horrors, this is unoriginal almost from beginning to end: there's the trademark long-haired vengeful female ghost, ominous clumps of thick, black hair and puddles of water, and near the end, a twist that *almost*, but not quite makes sense out of the whole thing (the twist is easily one of the best qualities). And to the viewer's irritation, when the film isn't recycling (at times, so exact that it could easily be dubbed plagiarized) imagery from other movies, it's making you jump. A lot. And by jumps, I don't mean things jumping out or anything, just VERY loud noises and screeches in the soundtrack used to make the audience jump six feet in the air (there's even a few "made-you-jump" moments that are simply infuriating). And when it is not ripping-off other movies, it's boring, and hard to sit through.<br /><br />And it's a shame, because "Ryeong" could have easily been really good, and it has everything to make it good, but its the annoying overuse of completely predictable loud noises and jump scares that eventually ruin the movie. A perfect example of how good it could have been: there's a moment when one of out characters is looking at a corpse, and without a sound, the corpse looks back. It's wholly predictable, but the use of silence in that scene is brilliant. And unfortunately, that's as scary as the movie got for me.<br /><br />Admittedly, "Ryeong" has a few good features, and even a couple jumps that aren't as predictable, and do work. There's a very good and sad back-story used to explain the events, and the twist is pretty unpredictable. Those are the only things that separate the film from any other Asian ghost/horror film. But the problem with these is, even though they do work, they have been used before (J-Horror fans will easily realize the big reveal was inspired by "A Tale of Two Sisters"), and it takes the back-story a good fifty minutes to get going.<br /><br />So in the end, "Ryong" really seems like a truly wasted opportunity. Tae-kyeong Kim hoped that the plot twist and other good features act as diversions, so the audience won't notice the huge flaws. But he failed, and well... We noticed everything.<br /><br />My rating: 4/10.
